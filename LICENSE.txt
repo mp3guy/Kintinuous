@@ -1,0 +1,240 @@
+WE (The National University of Ireland Maynooth, Maynooth, Ireland (NUIM) and the Massachusetts 
+Institute of Technology, 77 Massachusetts Avenue, Cambridge, Massachusetts 02139, U.S.A. (MIT)) ARE 
+WILLING TO LICENSE THIS SOFTWARE TO YOU (a licensee "You") ONLY ON THE CONDITION THAT YOU ACCEPT 
+ALL OF THE TERMS CONTAINED IN THE FOLLOWING AGREEMENT. PLEASE READ THE AGREEMENT CAREFULLY BEFORE 
+DOWNLOADING THE SOFTWARE. BY EXERCISING THE OPTION TO DOWNLOAD THE SOFTWARE YOU AGREE TO BE BOUND 
+BY THE TERMS OF THE AGREEMENT.
+
+SOFTWARE AND PATENT LICENSE AGREEMENT
+
+1. Grant
+
+This Agreement pertains to:
+
+(a) a worldwide, non-exclusive, temporary, fully paid-up, royalty free, non-transferable, 
+non-sub-licensable copyright license (the "License") to use the Kintinuous source code, including 
+any modification, part or derivative (the "Software").
+
+(b) a worldwide, non-exclusive, temporary, fully paid-up, royalty free, non-transferable, 
+non-sub-licensable patent license (the "Patent License") to use the Kintinuous patent, including 
+any modification, part or derivative (the "Patent").
+
+Ownership and License. Your rights to use and download the Software onto your computer, and all 
+other copies that You are authorised to make, are specified in this Agreement. However, we (or our 
+licensors) retain all rights, including but not limited to all copyright and other intellectual 
+property rights anywhere in the world, in the Software and the Patent not expressly granted to You 
+in this Agreement.
+
+Contributions. You may make contributions to the Software however NUIM and MIT are under no 
+obligation to accept any contribution you make whether intentionally or unintentionally submitted.
+
+2. Permitted use of the License:
+
+(a) You may download and install the Software onto one computer or server for use in accordance 
+with Clause 2(b) of this Agreement provided that You ensure that the Software is not accessible by 
+other users unless they have themselves accepted the terms of this license agreement.
+
+(b) You may use the Software solely for non-commercial, internal or academic research purposes and 
+only in accordance with the terms of this Agreement. You may not use the Software for commercial 
+purposes, including but not limited to (1) integration of all or part of the source code or the 
+Software or the Patent into a product for sale or license by or on behalf of You to third parties 
+or (2) use of the Software or of the Patent or any derivative of it for research to develop 
+software products for sale or license to a third party or (3) use of the Software or of the Patent 
+or any derivative of it for research to develop non-software products for sale or license to a 
+third party, or (4) use of the Software or the Patent to provide any service to an external 
+organisation for which payment is received.
+
+Should You wish to use the Software for commercial purposes, You should email: 
+commercialisation@nuim.ie.
+
+(c) Right to Copy. You may copy the Software for back-up and archival purposes, provided that each 
+copy is kept in your possession and provided You reproduce our copyright notice (set out in 
+Schedule 1) on each copy.
+
+(d) Transfer and sub-licensing. You may not rent, lend, or lease the Software or the Patent and You 
+may not transmit, transfer or sub-license this license to use the Software or the Patent or any of 
+your rights or obligations under this Agreement to another party.
+
+(e) Identity of Licensee. The license granted herein is personal to You. You shall not permit any 
+third party to access, modify or otherwise use the Software nor shall You access modify or 
+otherwise use the Software on behalf of any third party. If You wish to obtain a license for 
+multiple users or a site license for the Software please contact us at: commercialisation@nuim.ie.
+
+(f) Publications and presentations. You may make public, results or data obtained from, dependent 
+on or arising from research carried out using the Software or the Patent, provided that any such 
+presentation or publication identifies the Software or the Patent as the source of the results or 
+the data, including the Copyright Notice given in each element of the Software, and stating that 
+the Software and the Patent has been made available for use by You under license from NUIM and MIT 
+and You provide a copy of any such publication to NUIM and MIT.
+
+3. Prohibited Uses.
+
+You may not, without written permission from us at commercialisation@nuim.ie:
+
+(a) Use, copy, modify, merge, or transfer copies of the Software or any documentation provided by 
+us which relates to the Software except as provided in this Agreement;
+
+(b) Use any back-up or archival copies of the Software (or allow anyone else to use such copies) 
+for any purpose other than to replace the original copy in the event it is destroyed or becomes 
+defective; or
+
+(c) Disassemble, decompile or "unlock", reverse translate, or in any manner decode the Software for 
+any reason.
+
+4. Warranty Disclaimer
+
+(a) Disclaimer. The Software has been developed for research purposes only. You acknowledge that we 
+are providing the Software to You 'as-is' under this license agreement free of charge and on 
+condition that the disclaimer set out below shall apply. We do not represent or warrant that the 
+Software as to: (i) the quality, accuracy or reliability of the Software; (ii) the suitability of 
+the Software for any particular use or for use under any specific conditions; and (iii) whether use 
+of the Software or the Patent will infringe third-party rights.
+
+You acknowledge that You have reviewed and evaluated the Software to determine that it meets your 
+needs and that You assume all responsibility and liability for determining the suitability of the 
+Software as fit for your particular purposes and requirements. Subject to Clause 4(b), we exclude 
+and expressly disclaim all express and implied representations, warranties, conditions and terms 
+not stated herein (including the implied conditions or warranties of satisfactory quality, 
+merchantable quality, merchantability and fitness for purpose).
+
+(b) Savings. Some jurisdictions may imply warranties, conditions or terms or impose obligations 
+upon us which cannot, in whole or in part, be excluded, restricted or modified or otherwise do not 
+allow the exclusion of implied warranties, conditions or terms, in which case the above warranty 
+disclaimer and exclusion will only apply to You to the extent permitted in the relevant 
+jurisdiction and does not in any event exclude any implied warranties, conditions or terms which 
+may not under applicable law be excluded.
+
+(c) Both NUIM and MIT disclaim all responsibility for the use which is made of the Software and any 
+liability for the outcomes arising from using the Software.
+
+5. Limitation of Liability
+
+(a) You acknowledge that we are providing the Software and the Patent to You under this license 
+agreement free of charge and on condition that the limitation of liability set out below shall 
+apply. Accordingly, subject to Clause 5(b), we exclude all liability whether in contract, tort, 
+negligence or otherwise, in respect of the Software and/or any related documentation provided to 
+You by us including, but not limited to, liability for loss or corruption of data, loss of 
+contracts, loss of income, loss of profits, loss of cover and any consequential or indirect loss or 
+damage of any kind arising out of or in connection with this license agreement, however caused. 
+This exclusion shall apply even if we have been advised of the possibility of such loss or damage.
+
+(b) You agree to indemnify NUIM and MIT and hold them harmless from and against any and all claims, 
+damages and liabilities asserted by third parties (including claims for negligence) which arise 
+directly or indirectly from the use of the Software or any derivative of it or the sale of any 
+products based on the Software. You undertake to make no liability claim against any employee, 
+student, agent or appointee of NUIM or MIT, in connection with this License or the Software or the 
+Patent.
+
+(c) Nothing in this Agreement shall have the effect of excluding or limiting our statutory 
+liability.
+
+(d) Some jurisdictions do not allow these limitations or exclusions either wholly or in part, and, 
+to that extent, they may not apply to you. Nothing in this license agreement will affect your 
+statutory rights or other relevant statutory provisions which cannot be excluded, restricted or 
+modified, and its terms and conditions must be read and construed subject to any such statutory 
+rights and/or provisions.
+
+6. Confidentiality. You agree not to disclose any confidential information provided to You by us 
+pursuant to this Agreement to any third party without our prior written consent. The obligations in 
+this Clause 6 shall survive the termination of this Agreement for any reason.
+
+7. Termination.
+
+(a) We may terminate this license agreement and your right to use the Software and the Patent at 
+any time with immediate effect upon written notice to You.
+
+(b) This license agreement and your right to use the Software or the Patent automatically terminate 
+if You:
+
+(i) fail to comply with any provisions of this Agreement; or
+
+(ii) destroy the copies of the Software in your possession, or voluntarily return the Software to 
+us.
+
+(iii) institute patent litigation against NUIM or MIT (including a cross-claim or counterclaim in a 
+lawsuit) alleging that the Software or the Patent constitutes direct or contributory patent 
+infringement.
+
+(c) Upon termination You will destroy all copies of the Software.
+
+(d) Otherwise, the restrictions on your rights to use the Software and the Patent will expire 10 
+(ten) years after first use of the Software or the Patent under this license agreement.
+
+8. Export Control.
+
+You agree to comply with all United States and European export control laws and regulations 
+controlling the export of the Software, including, without limitation, all Export Administration 
+Regulations of the United States Department of Commerce. Among other things, these laws and 
+regulations prohibit, or require a license for, the export of certain types of software to 
+specified countries.
+
+9. Miscellaneous Provisions.
+
+(a) This Agreement will be governed by and construed in accordance with the substantive laws of the 
+Republic of Ireland whose courts shall have exclusive jurisdiction over all disputes which may 
+arise between us.
+
+(b) This is the entire agreement between us relating to the Software, and supersedes any prior 
+purchase order, communications, advertising or representations concerning the Software.
+
+(c) No change or modification of this Agreement will be valid unless it is in writing, and is 
+signed by us.
+
+(d) The unenforceability or invalidity of any part of this Agreement will not affect the 
+enforceability or validity of the remaining parts.
+
+Schedule 1
+
+The Software
+
+Kintinuous is a real-time dense visual SLAM system capable of producing high quality globally 
+consistent point and mesh reconstructions over hundreds of metres in real-time with only a low-cost 
+commodity RGB-D sensor.  It is based on the techniques described in the following publications:
+
+    Real-time Large Scale Dense RGB-D SLAM with Volumetric Fusion, T. Whelan, M. Kaess, H. 
+Johannsson, M.F. Fallon, J. J. Leonard and J.B. McDonald, IJRR '14
+    Deformation-based Loop Closure for Large Scale Dense RGB-D SLAM, T. Whelan, M. Kaess, J.J. 
+Leonard, and J.B. McDonald, IROS '13
+    Robust Real-Time Visual Odometry for Dense RGB-D Mapping, T. Whelan, H. Johannsson, M. Kaess, 
+J.J. Leonard, and J.B. McDonald, ICRA '13
+    Kintinuous: Spatially Extended KinectFusion, T. Whelan, M. Kaess, M.F. Fallon, H. Johannsson, 
+J. J. Leonard and J.B. McDonald, RSS RGB-D Workshop '12
+    A method and system for mapping an environment, T. Whelan, M. Kaess, J.J. Leonard and J.B. 
+McDonald, PCT/EP2014/058079, WO/2014/202258. Filed 22/04/2014, published 24/12/2014
+
+The Patent
+
+The Kintinuous Software embodies technology for which patent protection has been applied for see 
+https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2014202258.
+
+Copyright Notice
+
+This file is part of Kintinuous.
+
+Copyright (C) 2015 The National University of Ireland Maynooth and Massachusetts Institute of 
+Technology
+
+The use of the code within this file and all code within files that make up the software that is 
+Kintinuous is permitted for non-commercial purposes only.  The full terms and conditions that apply 
+to the code within this file are detailed within the LICENSE.txt file and at 
+<http://www.cs.nuim.ie/research/vision/data/kintinuous/code.php> unless explicitly stated.  By 
+downloading this file you agree to comply with these terms.
+
+If you wish to use any of this code for commercial purposes then please email 
+commercialisation@nuim.ie.
+
+Acknowledgements
+
+If You use the Software or the Patent then You should reference the following papers in any 
+publication:
+
+    Real-time Large Scale Dense RGB-D SLAM with Volumetric Fusion, T. Whelan, M. Kaess, H. 
+Johannsson, M.F. Fallon, J. J. Leonard and J.B. McDonald, IJRR '14
+    Deformation-based Loop Closure for Large Scale Dense RGB-D SLAM, T. Whelan, M. Kaess, J.J. 
+Leonard, and J.B. McDonald, IROS '13
+    Robust Real-Time Visual Odometry for Dense RGB-D Mapping, T. Whelan, H. Johannsson, M. Kaess, 
+J.J. Leonard, and J.B. McDonald, ICRA '13
+    Kintinuous: Spatially Extended KinectFusion, T. Whelan, M. Kaess, M.F. Fallon, H. Johannsson, 
+J. J. Leonard and J.B. McDonald, RSS RGB-D Workshop '12
+    A method and system for mapping an environment, T. Whelan, M. Kaess, J.J. Leonard and J.B. 
+McDonald, PCT/EP2014/058079, WO/2014/202258. Filed 22/04/2014, published 24/12/2014
