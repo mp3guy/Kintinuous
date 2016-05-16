@@ -74,6 +74,7 @@ rm -rf opencv-2.4.9
 #DLib for place recognition
 git clone https://github.com/dorian3d/DLib.git
 cd DLib
+git reset --hard 330bdc10576f6bcb55e0bd85cd5296f39ba8811a
 mkdir build
 cd build
 cmake ../
@@ -85,6 +86,7 @@ rm -rf DLib
 #DBoW2 for place recognition
 git clone https://github.com/dorian3d/DBoW2.git
 cd DBoW2
+git reset --hard 4a6eed2b3ae35ed6837c8ba226b55b30faaf419d
 mkdir build
 cd build
 cmake ../
@@ -96,6 +98,7 @@ rm -rf DBoW2
 #DLoopDetector for place recognition
 git clone https://github.com/dorian3d/DLoopDetector.git
 cd DLoopDetector
+git reset --hard 84bfc56320371bed97cab8aad3aa9561ca931d3f
 mkdir build
 cd build
 cmake ../

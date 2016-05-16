@@ -23,7 +23,9 @@ Please cite the most appropriate of these works (in order of our preference) if 
 * zlib
 * libjpeg
 * [OpenCV](http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip)
-* [DLib](https://github.com/dorian3d/DLib), [DBoW2](https://github.com/dorian3d/DBoW2) and [DLoopDetector](https://github.com/dorian3d/DLoopDetector)
+* [DLib](https://github.com/dorian3d/DLib) @ 330bdc10576f6bcb55e0bd85cd5296f39ba8811a
+* [DBoW2](https://github.com/dorian3d/DBoW2) @ 4a6eed2b3ae35ed6837c8ba226b55b30faaf419d
+* [DLoopDetector](https://github.com/dorian3d/DLoopDetector) @ 84bfc56320371bed97cab8aad3aa9561ca931d3f
 * [iSAM](http://people.csail.mit.edu/kaess/isam/)
 * [PCL](http://pointclouds.org/)
 * [Pangolin](https://github.com/stevenlovegrove/Pangolin)
