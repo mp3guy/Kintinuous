@@ -183,7 +183,7 @@ CloudSlice::Odometry RGBDOdometry::getIncrementalTransformation(Eigen::Vector3f 
 
     for(int i = 0; i < NUM_PYRS; i++)
     {
-        sobelGaussian(nextImage[i], nextdIdx[i], nextdIdy[i]);
+        computeDerivativeImages(nextImage[i], nextdIdx[i], nextdIdy[i]);
     }
 
     cv::Mat resultRt = cv::Mat::eye(4, 4, CV_64FC1);
