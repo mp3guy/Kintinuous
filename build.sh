@@ -112,6 +112,7 @@ wget http://people.csail.mit.edu/kaess/isam/isam_v1_7.tgz
 tar -xvf isam_v1_7.tgz
 rm isam_v1_7.tgz
 cd isam_v1_7
+mkdir build
 cd build
 cmake ..
 make -j8
