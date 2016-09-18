@@ -12,7 +12,7 @@ Please cite the most appropriate of these works (in order of our preference) if 
 * **[A method and system for mapping an environment](https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2014202258)**, *T. Whelan, M. Kaess, J.J. Leonard and J.B. McDonald*, PCT/EP2014/058079
 
 # 1. What do I need to build it? #
-* Ubuntu 14.04 or 15.04 (Though many other linux distros will work fine)
+* Ubuntu 14.04, 15.04 or 16.04 (Though many other linux distros will work fine)
 * CMake
 * OpenGL
 * [CUDA >= 7.0](https://developer.nvidia.com/cuda-downloads)
@@ -33,10 +33,10 @@ Please cite the most appropriate of these works (in order of our preference) if 
 Firstly, add [nVidia's official CUDA repository](https://developer.nvidia.com/cuda-downloads) to your apt sources, then run the following command to pull in most dependencies from the official repos:
 
 ```bash
-sudo apt-get install -y cmake-qt-gui git build-essential libusb-1.0-0-dev libudev-dev openjdk-7-jdk freeglut3-dev python-vtk libvtk-java libglew-dev cuda-7-5 libsuitesparse-dev
+sudo apt-get install -y cmake-qt-gui git build-essential libusb-1.0-0-dev libudev-dev openjdk-7-jdk freeglut3-dev python-vtk libvtk-java libglew-dev cuda-7-5 libsuitesparse-dev openexr
 ```
 
-This is where things get really bad. Due to libraries constantly changing their APIs and includes, creating build processes that actually last for more than a few months between a couple of Ubuntu versions is extremely difficult. Below are separate instructions for Ubuntu 14.04 and 15.04. 
+This is where things get really bad. Due to libraries constantly changing their APIs and includes, creating build processes that actually last for more than a few months between a couple of Ubuntu versions is extremely difficult. Below are separate instructions for Ubuntu 14.04,  15.04 and 16.04. 
 
 **14.04**
 
@@ -99,6 +99,24 @@ cmake .. -DAVFORMAT_INCLUDE_DIR=""
 ```
 
 Afterwards, you will be able to build Kintinuous. 
+
+**16.04**
+
+The instructions for 15.04 will work fine except you can't use the apt version of PCL because [someone screwed up vtk](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=819608). So ensure you purge/remove it completely if you have it installed from apt, then build it manually;
+
+```bash
+sudo apt-get install g++ cmake cmake-gui doxygen mpi-default-dev openmpi-bin openmpi-common libflann-dev libeigen3-dev libboost-all-dev libvtk5-qt4-dev libvtk6.2 libvtk5-dev libqhull* libusb-dev libgtest-dev git-core freeglut3-dev pkg-config build-essential libxmu-dev libxi-dev libusb-1.0-0-dev graphviz mono-complete qt-sdk openjdk-7-jdk openjdk-7-jre
+git clone https://github.com/PointCloudLibrary/pcl.git
+cd pcl
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_GPU=OFF -DBUILD_apps=OFF -DBUILD_examples=OFF ..
+make -j8
+sudo make install
+sudo ldconfig
+```
+
+Afterwards, Kintinuous should link without any problems. 
 
 # 2. Is there an easier way to build it? #
 Understandably, building all of the dependencies seems quite complicated. If you run the *build.sh* script on a fresh clean install of Ubuntu 14.04 or 15.04, enter your password for sudo a few times and wait a few minutes all dependencies will get downloaded and installed and it should build everything correctly. This has not been tested on anything but fresh installs, so I would advise using it with caution if you already have some of the dependencies installed. 

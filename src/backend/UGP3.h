@@ -57,7 +57,7 @@
 // PCL includes
 #include <pcl/surface/reconstruction.h>
 #include <pcl/kdtree/impl/kdtree_flann.hpp>
-#include <pcl/ros/conversions.h>
+#include <pcl/conversions.h>
 #include <pcl/kdtree/kdtree.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/PolygonMesh.h>

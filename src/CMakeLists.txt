@@ -5,7 +5,6 @@ project(Kintinuous)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}")
 
 find_package(OpenNI2 REQUIRED)
-find_package(PCL 1.7 QUIET REQUIRED)
 find_package(Pangolin 0.1 REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(ZLIB REQUIRED)
@@ -17,7 +16,6 @@ find_package(SuiteSparse REQUIRED)
 find_package(iSAM REQUIRED)
 find_package(Boost COMPONENTS thread serialization REQUIRED)
 
-include_directories(${PCL_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${CUDA_INCLUDE_DIRS})
 include_directories(${Pangolin_INCLUDE_DIRS})
@@ -29,10 +27,6 @@ include_directories(${OPENNI2_INCLUDE_DIR})
 include_directories(${DLoopDetector_INCLUDE_DIRS})
 include_directories(${SUITESPARSE_INCLUDE_DIRS})
 include_directories(${ISAM_INCLUDE_DIRS})
-
-link_directories(${PCL_LIBRARY_DIRS})
-
-add_definitions(${PCL_DEFINITIONS})
 
 file(GLOB srcs *.cpp *.h*)
 file(GLOB utils utils/*.cpp utils/*.h*)
@@ -53,7 +47,13 @@ set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS}  "-Xcompiler;-fPIC;")
 set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} "--ftz=true;--prec-div=false;--prec-sqrt=false") 
 
 CUDA_COMPILE(cuda_objs ${cuda})   
-    
+
+#Include only after compiling with nvcc, this stops vtk polluting nvcc's definitions with whitespace
+find_package(PCL 1.7 QUIET REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -msse -msse2 -msse3 -O3 -std=c++11")
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -std=c++11")
 
