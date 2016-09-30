@@ -157,6 +157,15 @@ class ConfigArgs
             incrementalMesh = enableMeshGenerator && onlineDeformation;
             fastOdometry = pcl::console::find_switch(argc, argv, "-fod");
 
+            if(voxelShift < 1 || voxelShift > 16)
+            {
+                std::cout << "Voxel shift must between 1 and 16, correcting to ";
+
+                voxelShift = std::max(1, std::min(voxelShift, 16));
+
+                std::cout << voxelShift << std::endl;
+            }
+
             if(!logFile.size())
             {
                 char buf[256];
