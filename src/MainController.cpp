@@ -18,6 +18,10 @@
 
 #include "MainController.h"
 
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/algorithm.hpp>
+#include <boost/algorithm/string.hpp>
+
 MainController * MainController::controller = 0;
 
 MainController::MainController(int argc, char * argv[])
@@ -62,8 +66,6 @@ int MainController::start()
 bool MainController::setup()
 {
     pcl::console::setVerbosityLevel(pcl::console::L_ALWAYS);
-
-    Resolution::get(640, 480);
 
     Volume::get(ConfigArgs::get().volumeSize);
 
@@ -181,10 +183,39 @@ int MainController::mainLoop()
 
 void MainController::loadCalibration()
 {
-    if(ConfigArgs::get().calibrationFile.length() > 0)
+    const std::string& calFile = ConfigArgs::get().calibrationFile;
+    if(calFile.length() > 0)
     {
-        cv::FileStorage calibrationFile(ConfigArgs::get().calibrationFile.c_str(), cv::FileStorage::READ);
-        depthIntrinsics = new cv::Mat((CvMat *) calibrationFile["depth_intrinsics"].readObj(), true);
+        std::string extension = boost::filesystem::extension(calFile);
+        boost::algorithm::to_lower(extension);
+
+        if(extension == ".xml" || extension == ".yml"){
+            // Traditional kintinuous format (opencv)
+            cv::FileStorage calibrationFile(calFile.c_str(), cv::FileStorage::READ);
+            depthIntrinsics = new cv::Mat((CvMat *) calibrationFile["depth_intrinsics"].readObj(), true);
+        } else {
+            // ElasticFusion format
+            std::ifstream file(calFile);
+            std::string line;
+
+            if(file.eof())
+              throw std::invalid_argument("Could not read calibration file.");
+
+            double fx, fy, cx, cy, w, h;
+            std::getline(file, line);
+            int n = sscanf(line.c_str(), "%lg %lg %lg %lg %lg %lg", &fx, &fy, &cx, &cy, &w, &h);
+
+            if (n != 4 && n != 6)
+              throw std::invalid_argument("Ooops, your calibration file should contain a single line with [fx fy cx cy] or [fx fy cx cy w h]");
+
+            depthIntrinsics = new cv::Mat(cv::Mat::zeros(3, 3, CV_64F));
+            depthIntrinsics->at<double>(0, 2) = cx;
+            depthIntrinsics->at<double>(1, 2) = cy;
+            depthIntrinsics->at<double>(0, 0) = fx;
+            depthIntrinsics->at<double>(1, 1) = fy;
+            depthIntrinsics->at<double>(2, 2) = 1;
+            if (n == 6) Resolution::get(w, h);
+        }
     }
     else
     {
@@ -195,6 +226,8 @@ void MainController::loadCalibration()
         depthIntrinsics->at<double>(1, 1) = 528.01442863461716;
         depthIntrinsics->at<double>(2, 2) = 1;
     }
+
+    Resolution::get(640, 480);
 }
 
 void MainController::complete()

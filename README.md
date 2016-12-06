@@ -36,7 +36,7 @@ Firstly, add [nVidia's official CUDA repository](https://developer.nvidia.com/cu
 sudo apt-get install -y cmake-qt-gui git build-essential libusb-1.0-0-dev libudev-dev openjdk-7-jdk freeglut3-dev python-vtk libvtk-java libglew-dev cuda-7-5 libsuitesparse-dev openexr
 ```
 
-This is where things get really bad. Due to libraries constantly changing their APIs and includes, creating build processes that actually last for more than a few months between a couple of Ubuntu versions is extremely difficult. Below are separate instructions for Ubuntu 14.04,  15.04 and 16.04. 
+This is where things get really bad. Due to libraries constantly changing their APIs and includes, creating build processes that actually last for more than a few months between a couple of Ubuntu versions is extremely difficult. Below are separate instructions for Ubuntu 14.04,  15.04 and 16.04.
 
 **14.04**
 
@@ -48,7 +48,7 @@ sudo apt-get update
 sudo apt-get install -y libpcl-all
 ```
 
-Then install [OpenCV](http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip), [DLib](https://github.com/dorian3d/DLib), [DBoW2](https://github.com/dorian3d/DBoW2), [DLoopDetector](https://github.com/dorian3d/DLoopDetector), [iSAM](http://people.csail.mit.edu/kaess/isam/) and [Pangolin](https://github.com/stevenlovegrove/Pangolin) from source, in this order. 
+Then install [OpenCV](http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip), [DLib](https://github.com/dorian3d/DLib), [DBoW2](https://github.com/dorian3d/DBoW2), [DLoopDetector](https://github.com/dorian3d/DLoopDetector), [iSAM](http://people.csail.mit.edu/kaess/isam/) and [Pangolin](https://github.com/stevenlovegrove/Pangolin) from source, in this order.
 
 Why do you have to install OpenCV from source? Because the version in the Ubuntu repos doesn't have the nonfree module, required for SURF descriptors used in the DBoW2. Also, it is strongly recommended you build OpenCV with the following options (in particular, building it with Qt5 might introduce a lot of pain):
 
@@ -62,7 +62,7 @@ If you have trouble building Pangolin, disable ffmpeg support using the followin
 cmake .. -DAVFORMAT_INCLUDE_DIR=""
 ```
 
-Once finished you'll have everything you need to build Kintinuous. 
+Once finished you'll have everything you need to build Kintinuous.
 
 **15.04**
 
@@ -72,7 +72,7 @@ On 15.04 PCL is in the official repos:
 sudo apt-get install -y libpcl-dev yasm libvtk5-qt4-dev
 ```
 
-The version of PCL in the 15.04 repos does not contain OpenNI2. You should build the Occipital maintained version, available [here](https://github.com/occipital/OpenNI2). 
+The version of PCL in the 15.04 repos does not contain OpenNI2. You should build the Occipital maintained version, available [here](https://github.com/occipital/OpenNI2).
 
 As usual, ffmpeg screws things up for everyone in 15.04. You need to build ffmpeg yourself otherwise OpenCV will fail to build. Why do you have to install OpenCV from source? Because the version in the Ubuntu repos doesn't have the nonfree module, required for SURF descriptors used in the DBoW2. Why can't you use OpenCV3? Because DBoW will fail to build. Why can't you disable ffmpeg in OpenCV's build? Because DBoW will fail if the video module isn't built. Build and install ffmpeg as follows:
 
@@ -98,7 +98,7 @@ Finally, build [DLib](https://github.com/dorian3d/DLib), [DBoW2](https://github.
 cmake .. -DAVFORMAT_INCLUDE_DIR=""
 ```
 
-Afterwards, you will be able to build Kintinuous. 
+Afterwards, you will be able to build Kintinuous.
 
 **16.04**
 
@@ -116,22 +116,24 @@ sudo make install
 sudo ldconfig
 ```
 
-Afterwards, Kintinuous should link without any problems. 
+Afterwards, Kintinuous should link without any problems.
 
 # 2. Is there an easier way to build it? #
-Understandably, building all of the dependencies seems quite complicated. If you run the *build.sh* script on a fresh clean install of Ubuntu 14.04 or 15.04, enter your password for sudo a few times and wait a few minutes all dependencies will get downloaded and installed and it should build everything correctly. This has not been tested on anything but fresh installs, so I would advise using it with caution if you already have some of the dependencies installed. 
+Understandably, building all of the dependencies seems quite complicated. If you run the *build.sh* script on a fresh clean install of Ubuntu 14.04 or 15.04, enter your password for sudo a few times and wait a few minutes all dependencies will get downloaded and installed and it should build everything correctly. This has not been tested on anything but fresh installs, so I would advise using it with caution if you already have some of the dependencies installed.
 
 # 3. How do I use it? #
 There are four build targets:
 
 * *libutil.a* is a small set of utility classes.
-* *libfrontend.a* is the main tracking and fusion component. 
-* *libbackend.a* contains the triangulation, loop closure and deformation components. 
-* *Kintinuous* is an executable GUI used to run the system. 
+* *libfrontend.a* is the main tracking and fusion component.
+* *libbackend.a* contains the triangulation, loop closure and deformation components.
+* *Kintinuous* is an executable GUI used to run the system.
 
 The GUI (*Kintinuous*) can take a bunch of parameters when launching it from the command line. They are as follows:
 
-* *-c <calibration>* : Loads a camera calibration file specified by a *depth_intrinsics* matrix in OpenCV format.
+* *-c <calibration>* : Loads a camera calibration file specified by either:
+ - A depth_intrinsics matrix in OpenCV format (ending .yml, .xml), or
+ - A text file containing [fx fy cx cy] or [fx fy cx cy w h]
 * *-l <logfile>* : Processes the specified .klg log file.
 * *-v <vocab>* : Loads DBoW vocabulary file.
 * *-p <poses>* : Loads ground truth poses to use instead of estimated pose.
@@ -157,7 +159,7 @@ The GUI (*Kintinuous*) can take a bunch of parameters when launching it from the
 * *-fl* : Subsample pose graph for faster loop closure.
 * *-fod* : Enable fast odometry.
 
-Essentially by default *./Kintinuous* will try run off an attached ASUS sensor live. You can provide a .klg log file instead with the -l parameter. You can capture .klg format logs using either [Logger1](https://github.com/mp3guy/Logger1) or [Logger2](https://github.com/mp3guy/Logger2). 
+Essentially by default *./Kintinuous* will try run off an attached ASUS sensor live. You can provide a .klg log file instead with the -l parameter. You can capture .klg format logs using either [Logger1](https://github.com/mp3guy/Logger1) or [Logger2](https://github.com/mp3guy/Logger2).
 
 # 4. Datasets #
 
@@ -172,7 +174,7 @@ The use of the code within this repository and all code within files that make u
 
 If you wish to use any of this code for commercial purposes then please email commercialisation@nuim.ie.
 
-Copyright (C) 2015 The National University of Ireland Maynooth and Massachusetts Institute of Technology. 
+Copyright (C) 2015 The National University of Ireland Maynooth and Massachusetts Institute of Technology.
 
 # 6. FAQ #
 ***What are the hardware requirements?***
@@ -181,24 +183,24 @@ A [fast nVidia GPU (1TFLOPS+)](https://en.wikipedia.org/wiki/List_of_Nvidia_grap
 
 ***The frontend is running fast but the map seems to be lagging behind***
 
-This is because you have a slow CPU. The backend runs completely on the CPU and must process every point extracted from the frontend. This means if your map is very large, or if you're moving very fast, the backend may not be able to keep up. Additionally, turning on meshing when loop closure is enabled is very CPU intensive, but a fast modern processor will cope with this in real-time. 
+This is because you have a slow CPU. The backend runs completely on the CPU and must process every point extracted from the frontend. This means if your map is very large, or if you're moving very fast, the backend may not be able to keep up. Additionally, turning on meshing when loop closure is enabled is very CPU intensive, but a fast modern processor will cope with this in real-time.
 
 ***I saved a map, how can I view it?***
 
-Download [Meshlab](http://meshlab.sourceforge.net/), which can read .ply files. If you only saved the point cloud you'll need to use PCL's viewer for .pcd files. 
+Download [Meshlab](http://meshlab.sourceforge.net/), which can read .ply files. If you only saved the point cloud you'll need to use PCL's viewer for .pcd files.
 
 ***The map keeps getting corrupted - tracking is failing - loop closures are incorrect/not working***
 
-Firstly, if you're running live and not processing a log file, ensure you're hitting 30Hz, this is important. Secondly, you cannot move the sensor extremely fast because this violates the assumption behind projective data association. In addition to this, you're probably using a primesense, which means you're suffering from motion blur, unsynchronised cameras and rolling shutter. All of these are aggravated by fast motion and hinder tracking performance. 
+Firstly, if you're running live and not processing a log file, ensure you're hitting 30Hz, this is important. Secondly, you cannot move the sensor extremely fast because this violates the assumption behind projective data association. In addition to this, you're probably using a primesense, which means you're suffering from motion blur, unsynchronised cameras and rolling shutter. All of these are aggravated by fast motion and hinder tracking performance.
 
-If you're not getting loop closures and expecting some, or getting false ones, you're at the mercy of DBoW. You can tweak some of the parameters related to it, but over all you're limited by the typical limitations of appearance-based place recognition. Feel free to splice in a different place recognition method. As an aside, [ElasticFusion](https://github.com/mp3guy/ElasticFusion) is much better for very loopy comprehensive scanning, which may suit your application better. 
+If you're not getting loop closures and expecting some, or getting false ones, you're at the mercy of DBoW. You can tweak some of the parameters related to it, but over all you're limited by the typical limitations of appearance-based place recognition. Feel free to splice in a different place recognition method. As an aside, [ElasticFusion](https://github.com/mp3guy/ElasticFusion) is much better for very loopy comprehensive scanning, which may suit your application better.
 
-If you notice some weird slicing effect during loop closures, either turn down the volume size or increase the rate at which poses are sampled in the deformation by decreasing the *-dg* parameter. 
+If you notice some weird slicing effect during loop closures, either turn down the volume size or increase the rate at which poses are sampled in the deformation by decreasing the *-dg* parameter.
 
 ***Is there a ROS bridge/node?***
 
-No. In fact, if you have ROS installed you're likely to run into some truly horrible build issues. 
+No. In fact, if you have ROS installed you're likely to run into some truly horrible build issues.
 
 ***This doesn't seem to work like it did in the videos/papers***
 
-A substantial amount of refactoring was carried out in order to open source this system, including rewriting a lot of functionality to avoid certain licenses. Although great care was taken during this process, it is possible that performance regressions were introduced and have not yet been discovered. 
+A substantial amount of refactoring was carried out in order to open source this system, including rewriting a lot of functionality to avoid certain licenses. Although great care was taken during this process, it is possible that performance regressions were introduced and have not yet been discovered.
