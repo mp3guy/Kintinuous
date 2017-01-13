@@ -52,10 +52,10 @@ PangoVis::PangoVis(cv::Mat * depthIntrinsics)
     tsdfRgbTex.Reinitialise(Resolution::get().width(), Resolution::get().height()),
     tsdfTex.Reinitialise(Resolution::get().width(), Resolution::get().height()),
 
-    rgbImg.Alloc(Resolution::get().width(), Resolution::get().height(), pangolin::VideoFormatFromString("RGB24"));
-    tsdfImg.Alloc(Resolution::get().width(), Resolution::get().height(), pangolin::VideoFormatFromString("RGB24"));
-    tsdfImgColor.Alloc(Resolution::get().width(), Resolution::get().height(), pangolin::VideoFormatFromString("RGB24"));
-    depthImg.Alloc(Resolution::get().width(), Resolution::get().height(), pangolin::VideoFormatFromString("RGB24"));
+    rgbImg.Reinitialise(Resolution::get().width(), Resolution::get().height());
+    tsdfImg.Reinitialise(Resolution::get().width(), Resolution::get().height());
+    tsdfImgColor.Reinitialise(Resolution::get().width(), Resolution::get().height());
+    depthImg.Reinitialise(Resolution::get().width(), Resolution::get().height());
 
     glEnable(GL_DEPTH_TEST);
 
@@ -97,11 +97,6 @@ PangoVis::~PangoVis()
     reset();
 
     delete [] depthBuffer;
-
-    pangolin::FreeImage(rgbImg);
-    pangolin::FreeImage(tsdfImg);
-    pangolin::FreeImage(tsdfImgColor);
-    pangolin::FreeImage(depthImg);
 }
 
 void PangoVis::removeAllClouds()
@@ -482,12 +477,11 @@ void PangoVis::processImages()
             }
         }
 
-        int innerPtr = 0;
-        for(int i = 0; i < Resolution::get().numPixels(); i++, innerPtr+=3)
+        for(size_t i = 0; i < depthImg.Area(); i++)
         {
-            depthImg.ptr[innerPtr + 0] = ((float)depthBuffer[i] / max) * 255.0f;
-            depthImg.ptr[innerPtr + 1] = ((float)depthBuffer[i] / max) * 255.0f;
-            depthImg.ptr[innerPtr + 2] = ((float)depthBuffer[i] / max) * 255.0f;
+            depthImg[i].x = ((float)depthBuffer[i] / max) * 255.0f;
+            depthImg[i].y = ((float)depthBuffer[i] / max) * 255.0f;
+            depthImg[i].z = ((float)depthBuffer[i] / max) * 255.0f;
         }
 
         rgbTex.Upload(rgbImg.ptr, GL_RGB, GL_UNSIGNED_BYTE);
@@ -516,9 +510,9 @@ void PangoVis::processImages()
                         pt.z = depthBuffer[j * Resolution::get().width() + i] * 0.001f;
                         pt.x = (static_cast<float>(i) - K(0, 2)) * pt.z * (1.0f / K(0, 0));
                         pt.y = (static_cast<float>(j) - K(1, 2)) * pt.z * (1.0f / K(1, 1));
-                        pt.b = rgbImg.ptr[3 * (j * Resolution::get().width() + i) + 0];
-                        pt.g = rgbImg.ptr[3 * (j * Resolution::get().width() + i) + 1];
-                        pt.r = rgbImg.ptr[3 * (j * Resolution::get().width() + i) + 2];
+                        pt.b = rgbImg(i, j).x;
+                        pt.g = rgbImg(i, j).y;
+                        pt.r = rgbImg(i, j).z;
                         cloud->push_back(pt);
                     }
                 }

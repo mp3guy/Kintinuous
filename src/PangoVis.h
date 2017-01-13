@@ -102,10 +102,10 @@ class PangoVis : public ThreadObject
                             tsdfRgbTex,
                             tsdfTex;
 
-        pangolin::TypedImage rgbImg;
-        pangolin::TypedImage tsdfImg;
-        pangolin::TypedImage tsdfImgColor;
-        pangolin::TypedImage depthImg;
+        pangolin::ManagedImage<uchar3> rgbImg;
+        pangolin::ManagedImage<uchar3> tsdfImg;
+        pangolin::ManagedImage<uchar3> tsdfImgColor;
+        pangolin::ManagedImage<uchar3> depthImg;
 
         unsigned short * depthBuffer;
 };
