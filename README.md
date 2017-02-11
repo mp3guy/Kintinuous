@@ -9,7 +9,7 @@ Please cite the most appropriate of these works (in order of our preference) if 
 * **[Deformation-based Loop Closure for Large Scale Dense RGB-D SLAM](http://thomaswhelan.ie/Whelan13iros.pdf)**, *T. Whelan, M. Kaess, J.J. Leonard, and J.B. McDonald*, IROS '13
 * **[Robust Real-Time Visual Odometry for Dense RGB-D Mapping](http://thomaswhelan.ie/Whelan13icra.pdf)**, *T. Whelan, H. Johannsson, M. Kaess, J.J. Leonard, and J.B. McDonald*, ICRA '13
 * **[Kintinuous: Spatially Extended KinectFusion](http://thomaswhelan.ie/Whelan12rssw.pdf)**, *T. Whelan, M. Kaess, M.F. Fallon, H. Johannsson, J. J. Leonard and J.B. McDonald*, RSS RGB-D Workshop '12
-* **[A method and system for mapping an environment](https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2014202258)**, *T. Whelan, M. Kaess, J.J. Leonard and J.B. McDonald*, PCT/EP2014/058079
+* **[A method and system for mapping an environment](https://www.google.com/patents/US9412173)**, *T. Whelan, M. Kaess, J.J. Leonard and J.B. McDonald*, US 9412173 B2
 
 # 1. What do I need to build it? #
 * Ubuntu 14.04, 15.04 or 16.04 (Though many other linux distros will work fine)
