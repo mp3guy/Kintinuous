@@ -23,6 +23,7 @@
 #include <cassert>
 #include <string>
 #include <pcl/console/parse.h>
+#include <boost/filesystem.hpp>
 
 class ConfigArgs
 {
@@ -67,6 +68,7 @@ class ConfigArgs
                                         "    -fl : Subsample pose graph for faster loop closure\n"
                                         "    -fod : Enable fast odometry\n"
                                         "    -h, --help : Display this help message and exit\n"
+                                        "    -tum : path of groundtruth.txt provided by TUM RGBD dataset to load initial camera pose\n"
                                         "\n"
                                         "Example: " + argv0 + " -s 7 -v ../vocab.yml.gz -l loop.klg -ri -fl -od";
 
@@ -78,6 +80,10 @@ class ConfigArgs
         std::string logFile;
         std::string vocabFile;
         std::string trajectoryFile;
+
+        std::string tumGT;
+        long long unsigned int utime;
+        float x, y, z, qx, qy, qz, qw;
 
         int gpu;
         int voxelShift;
@@ -133,6 +139,11 @@ class ConfigArgs
             pcl::console::parse_argument(argc, argv, "-l", logFile);
             pcl::console::parse_argument(argc, argv, "-v", vocabFile);
             pcl::console::parse_argument(argc, argv, "-p", trajectoryFile);
+            pcl::console::parse_argument(argc, argv, "-tum", tumGT);
+            if(tumGT.size())
+            {
+                loadTUM_GT_initialpose();
+            }
 
             pcl::console::parse_argument(argc, argv, "-gpu", gpu);
             pcl::console::parse_argument(argc, argv, "-t", voxelShift);
@@ -182,6 +193,32 @@ class ConfigArgs
             {
                 saveFile = logFile;
             }
+        }
+
+        void loadTUM_GT_initialpose()
+        {
+            assert(boost::filesystem::exists(tumGT.c_str()));
+            FILE *fp = fopen(tumGT.c_str(), "r");
+
+
+            char buffer[255];
+
+            int iSkip = 3;
+            for(int i=0; i<iSkip; i++)
+            {
+                fgets(buffer, 255, (FILE*) fp);
+            }
+
+            //Read first camera pose
+            if(fgets(buffer, 255, (FILE*) fp)) {
+                printf("%s\n", buffer);
+
+                int n = sscanf(buffer, "%llu %f %f %f %f %f %f %f", &utime, &x, &y, &z, &qx, &qy, &qz, &qw);
+
+                assert(n == 8);
+            }
+
+            fclose(fp);
         }
 };
 
