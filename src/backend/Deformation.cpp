@@ -39,12 +39,40 @@ Deformation::~Deformation()
     std::vector<std::pair<uint64_t, Eigen::Matrix4f> > newPoseGraph;
     iSAM->getCameraPoses(newPoseGraph);
 
+
+    Eigen::Vector3f *init_t;
+    Eigen::Matrix3f init_r;
+    if(ConfigArgs::get().tumGT.size())
+    {
+        //Eigen::Vector3f init_t(ConfigArgs::get().x, ConfigArgs::get().y, ConfigArgs::get().z);
+        init_t = new Eigen::Vector3f(ConfigArgs::get().x, ConfigArgs::get().y, ConfigArgs::get().z);
+
+        Eigen::Quaternionf init_q(ConfigArgs::get().qw, ConfigArgs::get().qx, ConfigArgs::get().qy, ConfigArgs::get().qz);
+        Eigen::Vector3f upVector(0, -1, 0);
+
+        init_r = init_q.toRotationMatrix();
+    }
     for(unsigned int i = 0; i < newPoseGraph.size(); i++)
     {
         file << std::setprecision(6) << std::fixed << (double)newPoseGraph.at(i).first / 1000000.0 << " ";
 
         Eigen::Vector3f trans = newPoseGraph.at(i).second.topRightCorner(3, 1);
         Eigen::Matrix3f rot = newPoseGraph.at(i).second.topLeftCorner(3, 3);
+        if(ConfigArgs::get().tumGT.size())
+        {
+            if(0==i)
+            {
+                trans += *init_t;
+                rot = init_r * rot;
+            }
+            else
+            {
+                trans += init_r.inverse() * (*init_t);
+                trans = init_r * trans;
+
+                rot = init_r * rot;
+            }
+        }
 
         file << trans(0) << " " << trans(1) << " " << trans(2) << " ";
 

@@ -208,12 +208,12 @@ class ConfigArgs
             {
                 fgets(buffer, 255, (FILE*) fp);
             }
-
+            double time;
             //Read first camera pose
             if(fgets(buffer, 255, (FILE*) fp)) {
                 printf("%s\n", buffer);
 
-                int n = sscanf(buffer, "%llu %f %f %f %f %f %f %f", &utime, &x, &y, &z, &qx, &qy, &qz, &qw);
+                int n = sscanf(buffer, "%f %f %f %f %f %f %f %f", &time, &x, &y, &z, &qx, &qy, &qz, &qw);
 
                 assert(n == 8);
             }
