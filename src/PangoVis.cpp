@@ -220,7 +220,7 @@ void PangoVis::processClouds()
         pangolin::glDrawAlignedBox(tsdfCube);
 
         glColor3f(0, 1, 0);
-        pangolin::glDrawFrustrum(Kinv, Resolution::get().width(), Resolution::get().height(), pose, 0.1f);
+        pangolin::glDrawFrustum(Kinv, Resolution::get().width(), Resolution::get().height(), pose, 0.1f);
         glColor3f(1, 1, 1);
     }
 
@@ -432,7 +432,7 @@ void PangoVis::render()
     glColor3f(1, 1, 1);
     for(size_t i = 0; i < poses.size(); i++)
     {
-        pangolin::glDrawFrustrum(Kinv, Resolution::get().width(), Resolution::get().height(), poses.at(i), 0.05f);
+        pangolin::glDrawFrustum(Kinv, Resolution::get().width(), Resolution::get().height(), poses.at(i), 0.05f);
     }
 
     glDisable(GL_DEPTH_TEST);
