@@ -16,52 +16,43 @@
  * please email commercialisation@nuim.ie.
  */
 
-#ifndef STOPWATCH_H_
-#define STOPWATCH_H_
+#pragma once
 
-#include <sys/socket.h>
+#include <arpa/inet.h>
 #include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <unistd.h>
 
 #include <string.h>
 #include <sys/time.h>
-#include <vector>
-#include <string>
-#include <unistd.h>
 #include <iostream>
-#include <unordered_map>
+#include <map>
+#include <string>
+#include <vector>
 
 #define SEND_INTERVAL_MS 10000
 
 #ifndef DISABLE_STOPWATCH
-#define STOPWATCH(name, expression) \
-    do \
-    { \
-        const uint64_t startTime = Stopwatch::get().getCurrentSystemTime(); \
-        expression \
-        const uint64_t endTime = Stopwatch::get().getCurrentSystemTime(); \
-        Stopwatch::get().addStopwatchTiming(name, endTime - startTime); \
-    } \
-    while(false)
+#define STOPWATCH(name, expression)                                                      \
+  do {                                                                                   \
+    const uint64_t startTime = Stopwatch::getInstance().getCurrentSystemTime();          \
+    expression const uint64_t endTime = Stopwatch::getInstance().getCurrentSystemTime(); \
+    Stopwatch::getInstance().addStopwatchTiming(name, endTime - startTime);              \
+  } while (false)
 
-#define TICK(name) \
-    do \
-    { \
-        Stopwatch::get().tick(name, Stopwatch::get().getCurrentSystemTime()); \
-    } \
-    while(false)
+#define TICK(name)                                                                        \
+  do {                                                                                    \
+    Stopwatch::getInstance().tick(name, Stopwatch::getInstance().getCurrentSystemTime()); \
+  } while (false)
 
-#define TOCK(name) \
-    do \
-    { \
-        Stopwatch::get().tock(name, Stopwatch::get().getCurrentSystemTime()); \
-    } \
-    while(false)
+#define TOCK(name)                                                                        \
+  do {                                                                                    \
+    Stopwatch::getInstance().tock(name, Stopwatch::getInstance().getCurrentSystemTime()); \
+  } while (false)
 #else
-#define STOPWATCH(name, expression) \
-    expression
+#define STOPWATCH(name, expression) expression
 
 #define TOCK(name) ((void)0)
 
@@ -69,142 +60,152 @@
 
 #endif
 
-class Stopwatch
-{
-    public:
-        static Stopwatch & get()
-        {
-            static Stopwatch instance;
-            return instance;
-        }
+class Stopwatch {
+ public:
+  static Stopwatch& getInstance() {
+    static Stopwatch instance;
+    return instance;
+  }
 
-        void addStopwatchTiming(std::string name, uint64_t duration)
-        {
-            if(duration > 0)
-            {
-                timings[name] = (float)(duration) / 1000.0f;
-            }
-        }
+  void addStopwatchTiming(std::string name, uint64_t duration) {
+    if (duration > 0) {
+      timingsMs[name] = (float)(duration) / 1000.0f;
+    }
+  }
 
-        void setCustomSignature(uint64_t newSignature)
-        {
-            signature = newSignature;
-        }
+  void setCustomSignature(uint64_t newSignature) {
+    signature = newSignature;
+  }
 
-        const std::unordered_map<std::string, float> & getTimings()
-        {
-            return timings;
-        }
+  const std::map<std::string, float>& getTimings() {
+    return timingsMs;
+  }
 
-        void printAll()
-        {
-            for(std::unordered_map<std::string, float>::const_iterator it = timings.begin(); it != timings.end(); it++)
-            {
-                std::cout << it->first << ": " << it->second  << "ms" << std::endl;
-            }
+  void printAll() {
+    for (std::map<std::string, float>::const_iterator it = timingsMs.begin(); it != timingsMs.end();
+         it++) {
+      std::cout << it->first << ": " << it->second << "ms" << std::endl;
+    }
 
-            std::cout << std::endl;
-        }
+    std::cout << std::endl;
+  }
 
-        void pulse(std::string name)
-        {
-            timings[name] = 1;
-        }
+  void pulse(std::string name) {
+    timingsMs[name] = 1;
+  }
 
-        void sendAll()
-        {
-            gettimeofday(&clock, 0);
+  void sendAll() {
+    gettimeofday(&clock, 0);
 
-            if((currentSend = (clock.tv_sec * 1000000 + clock.tv_usec)) - lastSend > SEND_INTERVAL_MS)
-            {
-                int size = 0;
-                unsigned char * data = serialiseTimings(size);
+    if ((currentSend = (clock.tv_sec * 1000000 + clock.tv_usec)) - lastSend > SEND_INTERVAL_MS) {
+      int size = 0;
+      uint8_t* data = serialiseTimings(size);
 
-                sendto(sockfd, data, size, 0, (struct sockaddr *) &servaddr, sizeof(servaddr));
+      sendto(sockfd, data, size, 0, (struct sockaddr*)&servaddr, sizeof(servaddr));
 
-                free(data);
+      free(data);
 
-                lastSend = currentSend;
-            }
-        }
+      lastSend = currentSend;
+    }
+  }
 
-        static uint64_t getCurrentSystemTime()
-        {
-            timeval tv;
-            gettimeofday(&tv, 0);
-            uint64_t time = (uint64_t)(tv.tv_sec * 1000000 + tv.tv_usec);
-            return time;
-        }
+  static uint64_t getCurrentSystemTime() {
+    timeval tv;
+    gettimeofday(&tv, 0);
+    uint64_t time = (uint64_t)(tv.tv_sec * 1000000 + tv.tv_usec);
+    return time;
+  }
 
-        void tick(std::string name, uint64_t start)
-        {
-        	tickTimings[name] = start;
-        }
+  void tick(std::string name, uint64_t start) {
+    ticksUs[name] = start;
+  }
 
-        void tock(std::string name, uint64_t end)
-        {
-        	float duration = (float)(end - tickTimings[name]) / 1000.0f;
+  void tock(std::string name, uint64_t end) {
+    tocksUs[name] = end;
 
-            if(duration > 0)
-            {
-                timings[name] = duration;
-            }
-        }
+    const auto tickUs = ticksUs.find(name);
 
-    private:
-        Stopwatch()
-        {
-            memset(&servaddr, 0, sizeof(servaddr));
-            servaddr.sin_family = AF_INET;
-            servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-            servaddr.sin_port = htons(45454);
-            sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (tickUs != ticksUs.end()) {
+      ticksUs.erase(name);
+      const float duration = (float)(end - tickUs->second) / 1000.0f;
+      if (duration > 0) {
+        timingsMs[name] = duration;
+      }
+    }
+  }
 
-            gettimeofday(&clock, 0);
+ private:
+  Stopwatch() {
+    memset(&servaddr, 0, sizeof(servaddr));
+    servaddr.sin_family = AF_INET;
+    servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    servaddr.sin_port = htons(45454);
+    sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
-            signature = clock.tv_sec * 1000000 + clock.tv_usec;
+    gettimeofday(&clock, 0);
 
-            currentSend = lastSend = clock.tv_sec * 1000000 + clock.tv_usec;
-        }
+    signature = clock.tv_sec * 1000000 + clock.tv_usec;
 
-        virtual ~Stopwatch()
-        {
-            close(sockfd);
-        }
+    currentSend = lastSend = clock.tv_sec * 1000000 + clock.tv_usec;
+  }
 
-        unsigned char * serialiseTimings(int & packetSize)
-        {
-            packetSize = sizeof(int) + sizeof(uint64_t);
+  virtual ~Stopwatch() {
+    close(sockfd);
+  }
 
-            for(std::unordered_map<std::string, float>::const_iterator it = timings.begin(); it != timings.end(); it++)
-            {
-                packetSize += it->first.length() + 1 + sizeof(float);
-            }
+  uint8_t* serialiseTimings(int& packetSizeBytes) {
+    // Packet structure: [int32_t packetSizeBytes, uint64_t signature, then for each entry]
+    packetSizeBytes = sizeof(int) + sizeof(uint64_t);
 
-            int * dataPacket = (int *)calloc(packetSize, sizeof(unsigned char));
+    // For each entry, length + 1 to include the null terminator for the strings
+    auto sumUpMapSizeBytes = [&](const auto& nameValueMap) {
+      for (const auto& [name, value] : nameValueMap) {
+        packetSizeBytes += sizeof(uint8_t) + (name.length() + 1) + sizeof(decltype(value));
+      }
+    };
 
-            dataPacket[0] = packetSize * sizeof(unsigned char);
+    sumUpMapSizeBytes(timingsMs);
+    sumUpMapSizeBytes(ticksUs);
+    sumUpMapSizeBytes(tocksUs);
 
-            *((uint64_t *)&dataPacket[1]) = signature;
+    int* dataPointer = (int*)calloc(packetSizeBytes, sizeof(uint8_t));
 
-            float * valuePointer = (float *)&((uint64_t *)&dataPacket[1])[1];
+    // First byte in the packet is the size in bytes of all data
+    dataPointer[0] = packetSizeBytes * sizeof(uint8_t);
 
-            for(std::unordered_map<std::string, float>::const_iterator it = timings.begin(); it != timings.end(); it++)
-            {
-                valuePointer = (float *)mempcpy(valuePointer, it->first.c_str(), it->first.length() + 1);
-                *valuePointer++ = it->second;
-            }
+    // Signature unique to each process
+    *((uint64_t*)&dataPointer[1]) = signature;
 
-            return (unsigned char *)dataPacket;
-        }
+    uint8_t* interleavedTypeNameValuePointer = (uint8_t*)&((uint64_t*)&dataPointer[1])[1];
 
-        timeval clock;
-        long long int currentSend, lastSend;
-        uint64_t signature;
-        int sockfd;
-        struct sockaddr_in servaddr;
-        std::unordered_map<std::string, float> timings;
-        std::unordered_map<std::string, uint64_t> tickTimings;
+    auto serializeMap = [&](const uint8_t type, const auto& nameValueMap) {
+      for (const auto& [name, value] : nameValueMap) {
+        // Write the type of measurement
+        memcpy(interleavedTypeNameValuePointer++, &type, sizeof(uint8_t));
+
+        // Write the name
+        memcpy(interleavedTypeNameValuePointer, name.c_str(), name.length() + 1);
+        interleavedTypeNameValuePointer += name.length() + 1;
+
+        // Write the value
+        memcpy(interleavedTypeNameValuePointer, &value, sizeof(decltype(value)));
+        interleavedTypeNameValuePointer += sizeof(decltype(value));
+      }
+    };
+
+    serializeMap(0, timingsMs);
+    serializeMap(1, ticksUs);
+    serializeMap(2, tocksUs);
+
+    return (uint8_t*)dataPointer;
+  }
+
+  timeval clock;
+  long long int currentSend, lastSend;
+  uint64_t signature;
+  int sockfd;
+  struct sockaddr_in servaddr;
+  std::map<std::string, float> timingsMs;
+  std::map<std::string, uint64_t> tocksUs;
+  std::map<std::string, uint64_t> ticksUs;
 };
-
-#endif /* STOPWATCH_H_ */
