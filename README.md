@@ -169,6 +169,20 @@ We have provided a sample dataset which you can run easily with Kintinuous for d
 ./Kintinuous -s 7 -v ../vocab.yml.gz -l loop.klg -ri -fl -od
 ```
 
+## TUM rgbd dataset ##
+[TUM RGBD dataset](http://vision.in.tum.de/data/datasets/rgbd-dataset/download)
+1. Download [fr2_desk ](http://vision.in.tum.de/rgbd/dataset/freiburg2/rgbd_dataset_freiburg2_desk.tgz)
+2. Uncompress by `tar xvfz rgbd_dataset_freiburg2_desk.tgz`
+3. Download `associate.py` from TUM [link](http://vision.in.tum.de/data/datasets/rgbd-dataset/tools)
+4. Associate files by `python associate.py ./rgbd_dataset_freiburg2_desk/depth.txt ./rgbd_dataset_freiburg2_desk/rgb.txt > ./rgbd_dataset_freiburg2_desk/associations.txt`
+5. Use [png_to_klg](https://github.com/HTLife/png_to_klg) to convert TUM dataset
+6. `./pngtoklg -w '~/rgbd_dataset_freiburg2_desk'  -o '~/rgbd_dataset_freiburg2_desk/fr2_desk.klg' -t`
+
+```bash
+./Kintinuous -s 7 -v ../vocab.yml.gz -l ~/rgbd_dataset_freiburg2_desk/fr2_desk.klg -ri -fl -od -tum ~/rgbd_dataset_freiburg2_desk/groundtruth.txt -f -s 10 -dg 0.1
+```
+Evaluate *.poses file in `~/rgbd_dataset_freiburg2_desk` with TUM [evaluate_ate.py](https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/)
+
 # 5. License and Copyright #
 The use of the code within this repository and all code within files that make up the software that is Kintinuous is permitted for non-commercial purposes only.  The full terms and conditions that apply to the code within this repository are detailed within the LICENSE.txt file and at [http://www.cs.nuim.ie/research/vision/data/kintinuous/code.php](http://www.cs.nuim.ie/research/vision/data/kintinuous/code.php) unless explicitly stated.  By accessing this repository you agree to comply with these terms.
 
